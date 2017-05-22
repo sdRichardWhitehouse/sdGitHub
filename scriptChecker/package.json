@@ -1,0 +1,11 @@
+{
+  "name": "scriptincludechecker",
+  "version": "1.0.0",
+  "description": "Script Include Checker",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Richard Whitehouse",
+  "license": "ISC"
+}
