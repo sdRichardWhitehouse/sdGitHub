@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Script Include Checker",
   "main": "app.js",
+  "devDependencies": {
+	  "request": "~2.81.0",
+	  "cheerio": "~0.22.0"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
 	"script": "node scriptchecker.js"
