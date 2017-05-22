@@ -1,0 +1,19 @@
+{
+  "name": "sdgithub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sdRichardWhitehouse/sdGitHub.git"
+  },
+  "author": "Richard Whitehouse",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sdRichardWhitehouse/sdGitHub/issues"
+  },
+  "homepage": "https://github.com/sdRichardWhitehouse/sdGitHub#readme"
+}
