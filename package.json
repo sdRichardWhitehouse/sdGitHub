@@ -1,21 +1,11 @@
 {
-  "name": "sdgithub",
+  "name": "scriptincludechecker",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Script Include Checker",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-	"start": "node index.js"
-
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sdRichardWhitehouse/sdGitHub.git"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Richard Whitehouse",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sdRichardWhitehouse/sdGitHub/issues"
-  },
-  "homepage": "https://github.com/sdRichardWhitehouse/sdGitHub#readme"
+  "license": "ISC"
 }
