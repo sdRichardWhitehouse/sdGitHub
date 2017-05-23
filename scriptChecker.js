@@ -63,8 +63,8 @@ if (buildSite == "help")
 	
 	urls = veryUrls;
 	if (buildSite == "Littlewoods") { urls = littlewoodsUrls; }
-	else if (buildSite == "LittlewoodsIreland") { urls = littlewoodsUrls; }
-	else if (buildSite == "VeryExclusive") { urls = littlewoodsUrls; }
+	else if (buildSite == "LittlewoodsIreland") { urls = littlewoodsIrelandUrls; }
+	else if (buildSite == "VeryExclusive") { urls = veryExclusiveUrls; }
 	else if (buildSite != "Very") {
 		buildSite = "Very";
 		console.log("\x1b[31m\x1b[1m", "Invalid Site Selected. Using Very. Run 'node app.js options' for help" ,"\x1b[0m");
@@ -104,7 +104,7 @@ if (buildSite == "help")
 				scriptTags = $('script, link');
 				
 				for (var i = 0, len = scriptTags.length; i < len; i++) {
-					if($(scriptTags[i]).attr('src') && $(scriptTags[i]).attr('src').indexOf('content.') > 0) {
+					if($(scriptTags[i]).attr('src') && $(scriptTags[i]).attr('src').indexOf('content.') > 0 || $(scriptTags[i]).attr('src') && $(scriptTags[i]).attr('src').indexOf('uat2.') > 0) {
 						console.log("JS Source: " + $(scriptTags[i]).attr('src'));
 					}
 				else if($(scriptTags[i]).attr('href') && $(scriptTags[i]).attr('href').indexOf('content.') > 0 && 

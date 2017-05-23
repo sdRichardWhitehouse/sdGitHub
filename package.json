@@ -2,7 +2,7 @@
   "name": "scriptincludechecker",
   "version": "1.0.0",
   "description": "Script Include Checker",
-  "main": "app.js",
+  "main": "scriptchecker.js",
   "devDependencies": {
 	  "request": "~2.81.0",
 	  "cheerio": "~0.22.0"
