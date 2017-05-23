@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-	"script": "node scriptchecker.js"
+	"script": "node scriptchecker.js",
+	"start": "scriptchecker.js"
   },
   "author": "Richard Whitehouse",
   "license": "ISC"
