@@ -6,7 +6,9 @@ var express = require('express'),
     morgan  = require('morgan');
 
 var scriptChecker = require('./scriptChecker/scriptChecker.js');
-var testString = scriptChecker.foo;
+var testString = scriptChecker.foo();
+
+console.log(testString + " is the testString");
     
 Object.assign=require('object-assign')
 
