@@ -1,6 +1,6 @@
 module.exports = {
 	foo: function() {
-		return "Hola";
+		return sayHello();
 	}/*,
 	runScript: function () {
 		var request = require("request"),
@@ -82,6 +82,10 @@ module.exports = {
 		}
 	}*/
 };
+
+function sayHello() {
+	return "Hello";
+}
 
 /*function checkUrl() {
 	urlChecking = urlChecking + 1;
