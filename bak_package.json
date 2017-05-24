@@ -1,0 +1,17 @@
+{
+  "name": "scriptincludechecker",
+  "version": "1.0.0",
+  "description": "Script Include Checker",
+  "main": "server.js",
+  "devDependencies": {
+	  "request": "~2.81.0",
+	  "cheerio": "~0.22.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+	"script": "node server.js",
+	"start": "server.js"
+  },
+  "author": "Richard Whitehouse",
+  "license": "ISC"
+}
