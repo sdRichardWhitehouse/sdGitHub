@@ -1,16 +1,14 @@
 module.exports = {
-
-  foo: function() {
-    return "Hola";
-  },
-
-  runScript: function () {
-	var request = require("request"),
-		cheerio = require("cheerio"),
-		urlChecking = -1,
-		buildSite = "Very",
-		device = "Desktop", // Mobile / Desktop
-		userAgent = "";
+	foo: function() {
+		return "Hola";
+	},
+	runScript: function () {
+		var request = require("request"),
+			cheerio = require("cheerio"),
+			urlChecking = -1,
+			buildSite = "Very",
+			device = "Desktop", // Mobile / Desktop
+			userAgent = "";
 
 		process.argv.forEach(function (val, index, array) {
 			if (index == 2) {
@@ -82,7 +80,7 @@ module.exports = {
 
 			checkUrl();	
 		}
-  }
+	}
 };
 
 function checkUrl() {
