@@ -1,9 +1,9 @@
 module.exports = {
 	foo: function() {
 		return sayHello();
-	}/*,
+	},
 	runScript: function () {
-		var request = require("request"),
+		/*var request = require("request"),
 			cheerio = require("cheerio"),
 			urlChecking = -1,
 			buildSite = "Very",
@@ -79,15 +79,15 @@ module.exports = {
 			console.log("\x1b[1m", "Checking: " + buildSite + " - " + device ,"\x1b[0m");
 
 			checkUrl();	
-		}
-	}*/
+		}*/
+	}
 };
 
 function sayHello() {
-	return "Hello";
+	return "Hello2";
 }
 
-/*function checkUrl() {
+function checkUrl() {
 	urlChecking = urlChecking + 1;
 	if (urls[urlChecking]) {
 		console.log("");
@@ -131,4 +131,3 @@ function makeUrlRequest(url) {
 		}
 	);
 }
-*/
