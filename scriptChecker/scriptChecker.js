@@ -1,7 +1,7 @@
 module.exports = {
 	foo: function() {
 		return "Hola";
-	},
+	}/*,
 	runScript: function () {
 		var request = require("request"),
 			cheerio = require("cheerio"),
@@ -80,10 +80,10 @@ module.exports = {
 
 			checkUrl();	
 		}
-	}
+	}*/
 };
 
-function checkUrl() {
+/*function checkUrl() {
 	urlChecking = urlChecking + 1;
 	if (urls[urlChecking]) {
 		console.log("");
@@ -127,3 +127,4 @@ function makeUrlRequest(url) {
 		}
 	);
 }
+*/
