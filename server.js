@@ -5,8 +5,9 @@ var express = require('express'),
     eps     = require('ejs'),
     morgan  = require('morgan');
 
-var scriptChecker = require('./scriptChecker/scriptChecker.js');
-var testString = scriptChecker.foo();
+console.log("Script Checker");
+var meTest = require('./scriptChecker/scriptChecker.js');
+var testString = meTest.foo();
 
 console.log(testString + " is the testString");
     
