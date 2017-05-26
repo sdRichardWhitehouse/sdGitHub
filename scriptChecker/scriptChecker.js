@@ -95,7 +95,7 @@ module.exports = {
 };
 
 function sayHello() {
-	return "Hello3";
+	return "Hello4";
 }
 
 function checkUrl() {
