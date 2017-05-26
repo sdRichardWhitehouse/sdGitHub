@@ -3,14 +3,14 @@ module.exports = {
 		return sayHello();
 	},
 	runScript: function () {
-		/*var request = require("request"),
+		var request = require("request"),
 			cheerio = require("cheerio"),
 			urlChecking = -1,
 			buildSite = "Very",
 			device = "Desktop", // Mobile / Desktop
 			userAgent = "";
 
-		process.argv.forEach(function (val, index, array) {
+		/*process.argv.forEach(function (val, index, array) {
 			if (index == 2) {
 				buildSite = val;
 			}
@@ -84,7 +84,7 @@ module.exports = {
 };
 
 function sayHello() {
-	return "Hello2";
+	return "Hello3";
 }
 
 function checkUrl() {
