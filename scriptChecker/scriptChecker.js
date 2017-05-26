@@ -10,6 +10,17 @@ module.exports = {
 			device = "Desktop", // Mobile / Desktop
 			userAgent = "";
 
+		var testList = [];
+		var testObject = { 
+			testObject: 'testObject1'
+		};
+		testList.push(testObject);
+		testObject = { 
+			testObject: 'testObject2'
+		};
+		testList.push(testObject);
+		return testList;
+
 		/*process.argv.forEach(function (val, index, array) {
 			if (index == 2) {
 				buildSite = val;

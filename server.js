@@ -8,6 +8,7 @@ var express = require('express'),
 console.log("Script Checker");
 var meTest = require('./scriptChecker/scriptChecker.js');
 var testString = meTest.foo();
+var testObject = meTest.runScript();
 
 console.log(testString + " is the testString");
     
