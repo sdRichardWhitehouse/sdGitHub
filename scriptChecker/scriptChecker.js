@@ -19,9 +19,9 @@ module.exports = {
 			testObject: 'testObject2'
 		};
 		testList.push(testObject);
-		return testList;
+		
 
-		/*process.argv.forEach(function (val, index, array) {
+		process.argv.forEach(function (val, index, array) {
 			if (index == 2) {
 				buildSite = val;
 			}
@@ -90,7 +90,8 @@ module.exports = {
 			console.log("\x1b[1m", "Checking: " + buildSite + " - " + device ,"\x1b[0m");
 
 			checkUrl();	
-		}*/
+			return testList;
+		}
 	}
 };
 
