@@ -216,10 +216,14 @@ pre {
 
 <section class='container'>
           <hgroup>
-            <h1>Welcome to your Node.js application on OpenShift - New <%=testString%> - found7: <%=testObject.length%></h1>
+            <h1>Welcome to your Node.js application on OpenShift - New <%=testString%> - found8: <%=testObject.length%></h1>
           </hgroup>
 
-		  
+		  <%for (var i = 0; i < testObject.length; i++) {%>
+			  <div class="row">
+  				<p><%=i%></p>
+			  </div>
+			<%}%>
 
         <div class="row">
           <section class='col-xs-12 col-sm-6 col-md-6'>
