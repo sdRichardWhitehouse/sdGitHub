@@ -222,7 +222,13 @@ pre {
 		  <%for (var i = 0; i < urlTestObject.length; i++) {%>
 			  <div class="row">
   				<p><%=urlTestObject[i].siteId%></p>
-
+          <% if (urlTestObject[i].urls && urlTestObject[i].urls.length > 0) { %>
+            <%for (var j = 0; j < urlTestObject[i].urls.length; j++) {%>
+              <div class="row">
+                <p><%=urlTestObject[j].urls[j].path%></p>
+              </div>
+            <%}%>
+          <% } %>
 			  </div>
 			<%}%>
 

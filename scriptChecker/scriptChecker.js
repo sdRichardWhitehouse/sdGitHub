@@ -131,13 +131,15 @@ function checkSites(sites) {
 				passUrl.url = j;
 				// outputObject(sites[i].urls[i]);
 				makeUrlRequest(passUrl).then(function (data) { 
-					console.log(scriptsRequested + " vs " + scriptsReturned);
-					console.log("Retrieved Data: " + data.site + " vs " + data.url);
-					console.log("Retrieved Data2: " + sites[data.site].siteId);
+					// console.log(scriptsRequested + " vs " + scriptsReturned);
+					// console.log("Retrieved Data: " + data.site + " vs " + data.url);
+					// console.log("Retrieved Data2: " + sites[data.site].siteId);
 					sites[data.site].urls[data.url] = data;
+					console.log(data.site + " vs " + data.url);
+					outputObject(sites[data.site].urls[data.url]);
 					
 					if (scriptsRequested === scriptsReturned) {
-						console.log("sending back promise");
+						console.log("sending back promise from checkSites");
 						outputObject(sites);
 						resolve(sites);
 					}
@@ -160,13 +162,21 @@ function outputObject (object) {
 			if(!obj.hasOwnProperty(prop)) continue;
 
 			// your code
-			console.log(prop + " = " + obj[prop]);
+
+			if (typeof(obj[prop]) == "object") {
+				console.log("***" + prop + "***");
+				// outputObject(obj[prop]);
+			} else {
+				console.log(prop + " = " + obj[prop] + " = " + typeof(obj[prop]));
+			}
+			
 		}
+		console.log("");
 	}
 }
 
 function makeUrlRequest(urlObject) {
-	console.log("making url request...");
+	// console.log("making url request...");
 	// outputObject(urlObject);
 	scriptsRequested = scriptsRequested + 1;
 	// console.log(userAgent + " is the userAgent");
@@ -182,7 +192,7 @@ function makeUrlRequest(urlObject) {
 	return new Promise(function (resolve, reject) {
 		request(options, 
 			function (error, response, body) {
-				console.log(urlObject.site + " is the site");
+				// console.log(urlObject.site + " is the site");
 				// console.log("inside the callback");
 				if (!error) {
 					var $ = cheerio.load(body),
@@ -191,19 +201,19 @@ function makeUrlRequest(urlObject) {
 					for (var i = 0, len = scriptTags.length; i < len; i++) {
 						if($(scriptTags[i]).attr('src') && $(scriptTags[i]).attr('src').indexOf('content.') > 0) {
 							urlObject.files.push({
-								url: $(scriptTags[i]).attr('src'),
+								filePath: $(scriptTags[i]).attr('src'),
 								type: "JS",
 								site: urlObject.site,
 								url: urlObject.url
 							});
-							// console.log("JS Source: " + $(scriptTags[i]).attr('src'));
+							console.log("JS Source: " + $(scriptTags[i]).attr('src'));
 						}
 					else if($(scriptTags[i]).attr('href') && $(scriptTags[i]).attr('href').indexOf('content.') > 0 && 
 						$(scriptTags[i]).attr('href').indexOf('.png') < 0 && $(scriptTags[i]).attr('href').indexOf('.ico') < 0) {
-							// console.log("CSS Source: " + $(scriptTags[i]).attr('href'));
+							console.log("CSS Source: " + $(scriptTags[i]).attr('href'));
 
 							urlObject.files.push({
-								url: $(scriptTags[i]).attr('src'),
+								filePath: $(scriptTags[i]).attr('href'),
 								type: "CSS",
 								site: urlObject.site,
 								url: urlObject.url
@@ -215,8 +225,8 @@ function makeUrlRequest(urlObject) {
 				}
 				scriptsReturned = scriptsReturned + 1;
 				// console.log("Requested: " + scriptsRequested + " vs " + "Returned: " + scriptsReturned);
-				console.log("outputting so far");
-				//outputObject(urlObject);
+				// console.log("outputting so far");
+				
 				console.log(urlObject.site + " is the returning site");
 				resolve(urlObject);
 			}

@@ -16,7 +16,7 @@ var testObject = meTest.runScript().then(function (data) {
 });
 
 function carryOn(urlTestObject) {
-  console.log(urlTestObject);
+  console.log(urlTestObject[0].urls[0]);
   console.log("was the test object");
       
   Object.assign=require('object-assign')
