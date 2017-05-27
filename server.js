@@ -72,6 +72,17 @@ function carryOn(urlTestObject) {
     });
   };
 
+  for (var i = 0; i < urlTestObject.length; i++) {
+    console.log(urlTestObject[i].siteId);
+    console.log(urlTestObject[i].urls);
+
+    if (urlTestObject[i].urls && urlTestObject[i].urls.length > 0) {
+      for (var j = 0; j < urlTestObject[i].urls.length; j++) {
+        console.log(urlTestObject[i].urls[j].title);
+      }
+    }
+  }
+
   app.get('/', function (req, res) {
     // try to initialize the db on every request if it's not already
     // initialized.
