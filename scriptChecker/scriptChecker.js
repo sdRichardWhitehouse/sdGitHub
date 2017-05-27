@@ -110,22 +110,6 @@ module.exports = {
 					// outputObject(data);
 					resolve(data); 
 				});
-				// console.log("promiseForValue: " + promiseForValue);			
-
-				//var testing = $.get(checkUrl());
-
-				/*testing.done(function( response ) {
-					console.log("i think that's finished");
-					// do something with the response
-				});*/
-				/*var testCount = 0;
-				while (scriptRequestComplete === false) {
-					console.log(testCount);
-					testCount = testCount +1;
-				}*/
-				
-				// console.log("onto the next section");
-				// outputObject(testList);
 			}
 		});
 	}
@@ -154,44 +138,15 @@ function checkSites(sites) {
 					
 					if (scriptsRequested === scriptsReturned) {
 						console.log("sending back promise");
-						outputObject(data);
-						resolve(data);
+						outputObject(sites);
+						resolve(sites);
 					}
 				});
 			}
 		}
 		console.log("finished checkSites");
 	});
-	/*urlChecking = urlChecking + 1;
-	if (urls[urlChecking]) {
-		console.log("");
-		console.log("");
-		console.log("\x1b[37m\x1b[1m",urls[urlChecking].title,"\x1b[0m", "(" + urls[urlChecking].path + ")");
-		//console.log("Checking: " + urls[urlChecking].title + " (" + urls[urlChecking].path + ")");
-		makeUrlRequest(urls[urlChecking].path);
-	} else {
-		if(scriptsRequested === scriptsReturned) {
-			console.log("finished");
-			scriptRequestComplete = false;
-		}
-	}*/
-}
 
-function checkUrl() {
-	/*console.log("checking url...");
-	urlChecking = urlChecking + 1;
-	if (urls[urlChecking]) {
-		console.log("");
-		console.log("");
-		console.log("\x1b[37m\x1b[1m",urls[urlChecking].title,"\x1b[0m", "(" + urls[urlChecking].path + ")");
-		//console.log("Checking: " + urls[urlChecking].title + " (" + urls[urlChecking].path + ")");
-		makeUrlRequest(urls[urlChecking].path);
-	} else {
-		if(scriptsRequested === scriptsReturned) {
-			console.log("finished");
-			scriptRequestComplete = false;
-		}
-	}*/
 }
 
 function outputObject (object) {
@@ -264,7 +219,6 @@ function makeUrlRequest(urlObject) {
 				//outputObject(urlObject);
 				console.log(urlObject.site + " is the returning site");
 				resolve(urlObject);
-				// checkUrl();
 			}
 		);
 	});
