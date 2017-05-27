@@ -216,19 +216,12 @@ pre {
 
 <section class='container'>
           <hgroup>
-            <h1>Welcome to your Node.js application on OpenShift - New - found16: <%=urlTestObject.length%></h1>
+            <h1>Welcome to your Node.js application on OpenShift - New - found17: <%=urlTestObject.length%></h1>
           </hgroup>
 
 		  <%for (var i = 0; i < urlTestObject.length; i++) {%>
 			  <div class="row">
   				<p><%=urlTestObject[i].siteId%></p>
-
-          <%for (var j = 0; j < urlTestObject[i].urls.length; i++) {%>
-            <%=urlTestObject[i].urls[j]%>
-            <div class="row">
-              <p><%=urlTestObject[i].urls[j].path%></p>
-            </div>
-          <%}%>
 
 			  </div>
 			<%}%>
