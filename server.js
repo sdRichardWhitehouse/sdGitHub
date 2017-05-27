@@ -10,12 +10,14 @@ console.log("Script Checker");
 var meTest = require('./scriptChecker/scriptChecker.js');
 var testString = meTest.foo();
 var testObject = meTest.runScript().then(function (data) {
-  console.log("Would usually carry on now...");
+  console.log("Carrying on now...");
+  console.log(data);
   carryOn(data);
 });
 
 function carryOn(urlTestObject) {
-  console.log(testObject + " is the testString");
+  console.log(urlTestObject);
+  console.log("was the test object");
       
   Object.assign=require('object-assign')
 
