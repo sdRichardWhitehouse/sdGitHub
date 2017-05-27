@@ -113,8 +113,8 @@ function carryOn(urlTestObject) {
     console.log('Error connecting to Mongo. Message:\n'+err);
   });
 
-  // app.listen(port, ip);
-  // console.log('Server running on http://%s:%s', ip, port);
+  app.listen(port, ip);
+  console.log('Server running on http://%s:%s', ip, port);
 
   module.exports = app ;
 }
