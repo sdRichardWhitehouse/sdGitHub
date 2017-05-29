@@ -7,12 +7,17 @@ var request = require("request"),
 	userAgent = "",
 	scriptsRequested = 0,
 	scriptsReturned = 0,
-	scriptRequestComplete = false;
+	scriptRequestComplete = false,
+	devices = [{
+		deviceId: "Desktop",
+		userAgent: ""
+	},
+	{
+		deviceId: "Mobile",
+		userAgent: "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25"
+	}];
 
 module.exports = {
-	foo: function() {
-		return sayHello();
-	},
 	runScript: function () {
 		return new Promise(function (resolve, reject) {
 			var testList = [];
@@ -79,9 +84,9 @@ module.exports = {
 					]
 				};
 				testList.push(veryUrls);
-				testList.push(littlewoodsUrls);
-				testList.push(littlewoodsIrelandUrls);
-				testList.push(veryExclusiveUrls);
+				// testList.push(littlewoodsUrls);
+				// testList.push(littlewoodsIrelandUrls);
+				// testList.push(veryExclusiveUrls);
 				
 				if (device == "Mobile") {
 					userAgent = "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A5376e Safari/8536.25";
@@ -115,35 +120,65 @@ module.exports = {
 	}
 };
 
-function sayHello() {
-	return "Hello4";
-}
+
 
 function checkSites(sites) {
-	return new Promise(function (resolve, reject) {
+	return new Promise(function (resolve, reject) {		
 		console.log("checking sites...");
-		for (var i = 0, len = sites.length-1; i < len; i++) {
-			console.log("Checking: " + sites[i].siteId);
-			for (var j = 0, len = sites[i].urls.length-1; j < len; j++) {
-				console.log("Checking URL: " + sites[i].urls[j].path);
-				var passUrl = sites[i].urls[j];
-				passUrl.site = i;
-				passUrl.url = j;
-				// outputObject(sites[i].urls[i]);
-				makeUrlRequest(passUrl).then(function (data) { 
-					// console.log(scriptsRequested + " vs " + scriptsReturned);
-					// console.log("Retrieved Data: " + data.site + " vs " + data.url);
-					// console.log("Retrieved Data2: " + sites[data.site].siteId);
-					sites[data.site].urls[data.url] = data;
-					console.log(data.site + " vs " + data.url);
-					outputObject(sites[data.site].urls[data.url]);
-					
-					if (scriptsRequested === scriptsReturned) {
-						console.log("sending back promise from checkSites");
-						outputObject(sites);
-						resolve(sites);
-					}
-				});
+
+		// outputObject(sites);
+
+var counter =0;
+		for (var i = 0, iLen = sites.length; i < iLen; i++) {
+			// console.log(i + " Checking: " + sites[i].siteId);
+			for (var j = 0, jLen = sites[i].urls.length; j < jLen; j++) {
+				// console.log(j + " Checking URL: " + sites[i].urls[j].path);
+				// console.log(devices);
+
+				for (var k = 0, kLen = devices.length; k < kLen; k++) {
+					counter = counter + 1;
+					// console.log(k + "in devices");
+					// outputObject(sites[i].urls[j]);
+					// console.log("done output");
+					// console.log(devices[k]);
+					// console.log("checking files on " + k + ":" + counter);
+					var passUrl = [];
+					passUrl.site = i;
+					passUrl.url = j;
+					passUrl.device = k;
+					passUrl.counter = counter;
+					passUrl.path = sites[i].urls[j].path;
+					passUrl.userAgent = devices[k].userAgent;
+					// outputObject(sites[i].urls[i]);
+					// console.log("calling makeUrlRequest...");
+					makeUrlRequest(passUrl).then(function (data) { 
+						// console.log("returned from makeUrlRequest: ");
+						console.log(scriptsRequested + " vs " + scriptsReturned);
+						if(!sites[data.site].urls[data.url].devices) {
+							sites[data.site].urls[data.url].devices = [];
+						}
+						sites[data.site].urls[data.url].devices.push({
+							deviceId: devices[data.device].deviceId,
+							files: data.files
+						})
+						// console.log("saved files")
+						// console.log("Retrieved Data: " + data.site + " vs " + data.url);
+
+						// outputObject(data);
+						
+						/*console.log("Retrieved Data2: " + sites[data.site].urls[data.url].devices[data.device]);
+						console.log(data.site + " vs " + data.url + " vs " + sites[data.site].urls[data.url].devices[data.device]);
+						sites[data.site].urls[data.url].devices[data.device] = data;
+						console.log(data.site + " vs " + data.url + " vs " + sites[data.site].urls[data.url].devices[data.device]);*/
+						// outputObject(sites[data.site].urls[data.url]);
+						
+						if (scriptsRequested === scriptsReturned) {
+							console.log("sending back promise from checkSites");
+							// outputObject(sites);
+							resolve(sites);
+						}
+					});
+				}
 			}
 		}
 		console.log("finished checkSites");
@@ -157,78 +192,82 @@ function outputObject (object) {
 		if (!object.hasOwnProperty(key)) continue;
 
 		var obj = object[key];
-		for (var prop in obj) {
-			// skip loop if the property is from prototype
-			if(!obj.hasOwnProperty(prop)) continue;
+		if(typeof(object[key]) == "string" || typeof(object[key]) == "number") {
+			console.log(prop + " = " + obj);
+		} else {
+			for (var prop in obj) {
+				// skip loop if the property is from prototype
+				if(!obj.hasOwnProperty(prop)) continue;
 
-			// your code
+				// your code
 
-			if (typeof(obj[prop]) == "object") {
-				console.log("***" + prop + "***");
-				// outputObject(obj[prop]);
-			} else {
-				console.log(prop + " = " + obj[prop] + " = " + typeof(obj[prop]));
+				if (typeof(obj[prop]) == "object") {
+					console.log("***" + prop + "***");
+					outputObject(obj[prop]);
+				} else {
+					console.log(prop + " = " + obj[prop] + " = " + typeof(obj[prop]));
+				}
+				
 			}
-			
 		}
 		console.log("");
 	}
 }
 
-function makeUrlRequest(urlObject) {
-	// console.log("making url request...");
-	// outputObject(urlObject);
-	scriptsRequested = scriptsRequested + 1;
-	// console.log(userAgent + " is the userAgent");
-	// console.log(url + " is the url");
-	var options = {
-		url: urlObject.path,
-		headers: {
-			'User-Agent': userAgent
-		}
-	};
-	urlObject.files = [];
-	
+function makeUrlRequest(urlObject) {	
 	return new Promise(function (resolve, reject) {
+		// console.log("making url request...");
+		// outputObject(urlObject);
+		// console.log(urlObject);
+		scriptsRequested = scriptsRequested + 1;
+		// console.log(userAgent + " is the userAgent");
+		// console.log(url + " is the url");
+		var options = {
+			url: urlObject.path,
+			headers: {
+				'User-Agent': urlObject.userAgent
+			}
+		};
+		// console.log("Creating Files on Device: " + urlObject.device);
+		files = [];
+
 		request(options, 
 			function (error, response, body) {
 				// console.log(urlObject.site + " is the site");
 				// console.log("inside the callback");
 				if (!error) {
+					urlObject.files = [];
 					var $ = cheerio.load(body),
 					scriptTags = $('script, link');
-					
+					// console.log("Created Files on Device: " + urlObject.device + ":" + urlObject.counter);
 					for (var i = 0, len = scriptTags.length; i < len; i++) {
 						if($(scriptTags[i]).attr('src') && $(scriptTags[i]).attr('src').indexOf('content.') > 0) {
 							urlObject.files.push({
 								filePath: $(scriptTags[i]).attr('src'),
-								type: "JS",
-								site: urlObject.site,
-								url: urlObject.url
+								type: "JS"
 							});
-							console.log("JS Source: " + $(scriptTags[i]).attr('src'));
+							// console.log("JS Source: " + $(scriptTags[i]).attr('src'));
 						}
-					else if($(scriptTags[i]).attr('href') && $(scriptTags[i]).attr('href').indexOf('content.') > 0 && 
+						else if($(scriptTags[i]).attr('href') && $(scriptTags[i]).attr('href').indexOf('content.') > 0 && 
 						$(scriptTags[i]).attr('href').indexOf('.png') < 0 && $(scriptTags[i]).attr('href').indexOf('.ico') < 0) {
-							console.log("CSS Source: " + $(scriptTags[i]).attr('href'));
+							// console.log("CSS Source: " + $(scriptTags[i]).attr('href'));
 
 							urlObject.files.push({
 								filePath: $(scriptTags[i]).attr('href'),
-								type: "CSS",
-								site: urlObject.site,
-								url: urlObject.url
+								type: "CSS"
 							});
 						}
 					}
 				} else {
 					console.log("We've encountered an error: " + error);
 				}
+				console.log("returning from makeUrlRequest");
 				scriptsReturned = scriptsReturned + 1;
-				// console.log("Requested: " + scriptsRequested + " vs " + "Returned: " + scriptsReturned);
-				// console.log("outputting so far");
-				
-				console.log(urlObject.site + " is the returning site");
+
+				// outputObject(urlObject);
+				console.log("resolving");
 				resolve(urlObject);
+				console.log("after resolve");
 			}
 		);
 	});

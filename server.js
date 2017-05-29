@@ -4,28 +4,37 @@ var express = require('express'),
     app     = express(),
     eps     = require('ejs'),
     morgan  = require('morgan'),
-    promise = require('promise');
+    promise = require('promise'),
+    monk = require('monk'),
+    nodeVersion = Number(process.version.match(/^v(\d+\.\d+)/)[1]);
 
 console.log("Script Checker");
 var meTest = require('./scriptChecker/scriptChecker.js');
-var testString = meTest.foo();
 var testObject = meTest.runScript().then(function (data) {
   console.log("Carrying on now...");
-  console.log(data);
   carryOn(data);
+
+  // https://www.npmjs.com/package/node-schedule
+  if(nodeVersion > 5) {
+    console.log("not sending email for the moment");
+    var email = require('./includes/email.js');
+    // email.sendEmail();
+  } else {
+    console.log("not sending email as node version is " + nodeVersion);
+  }
 });
 
 function carryOn(urlTestObject) {
-  console.log(urlTestObject[0].urls[0]);
-  console.log("was the test object");
       
   Object.assign=require('object-assign')
 
   app.engine('html', require('ejs').renderFile);
   app.use(morgan('combined'))
+  app.use(express.static(__dirname));
+  console.log(__dirname);
 
-  var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080,
-      ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0',
+  var port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000,
+      ip   = process.env.IP   || process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1',
       mongoURL = process.env.OPENSHIFT_MONGODB_DB_URL || process.env.MONGO_URL,
       mongoURLLabel = "";
 
@@ -52,6 +61,7 @@ function carryOn(urlTestObject) {
       dbDetails = new Object();
 
   var initDb = function(callback) {
+    console.log("attempting to connect to mongo...")
     if (mongoURL == null) return;
 
     var mongodb = require('mongodb');
@@ -72,16 +82,38 @@ function carryOn(urlTestObject) {
     });
   };
 
-  for (var i = 0; i < urlTestObject.length; i++) {
-    console.log(urlTestObject[i].siteId);
-    console.log(urlTestObject[i].urls);
-
-    if (urlTestObject[i].urls && urlTestObject[i].urls.length > 0) {
-      for (var j = 0; j < urlTestObject[i].urls.length; j++) {
-        console.log(urlTestObject[i].urls[j].title);
-      }
-    }
+  if (db === null) {
+    console.log("loading mongo db...");
+    // var database = require('./includes/database.js');
+    // database.connect();
+    // database.getSiteList();
   }
+
+  // outputObject(urlTestObject);
+
+  function outputObject (object) {
+	for (var key in object) {
+		// skip loop if the property is from prototype
+		if (!object.hasOwnProperty(key)) continue;
+
+		var obj = object[key];
+		for (var prop in obj) {
+			// skip loop if the property is from prototype
+			if(!obj.hasOwnProperty(prop)) continue;
+
+			// your code
+
+			if (typeof(obj[prop]) == "object") {
+				console.log("***" + prop + "***");
+				outputObject(obj[prop]);
+			} else {
+				console.log(prop + " = " + obj[prop] + " = " + typeof(obj[prop]));
+			}
+			
+		}
+		console.log("");
+	}
+}
 
   app.get('/', function (req, res) {
     // try to initialize the db on every request if it's not already
@@ -94,10 +126,10 @@ function carryOn(urlTestObject) {
       // Create a document with request IP and current time of request
       col.insert({ip: req.ip, date: Date.now()});
       col.count(function(err, count){
-        res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails, testString: testString, urlTestObject: urlTestObject });
+        res.render('index.html', { pageCountMessage : count, dbInfo: dbDetails, urlTestObject: urlTestObject });
       });
     } else {
-      res.render('index.html', { pageCountMessage : null, testString: testString, urlTestObject: urlTestObject});
+      res.render('index.html', { pageCountMessage : null, urlTestObject: urlTestObject});
     }
   });
 
@@ -114,6 +146,12 @@ function carryOn(urlTestObject) {
     } else {
       res.send('{ pageCount: -1 }');
     }
+  });
+
+  // Make our db accessible to our router
+  app.use(function(req,res,next){
+    req.db = db;
+    next();
   });
 
   // error handling
