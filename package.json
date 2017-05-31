@@ -14,7 +14,8 @@
     "object-assign":"4.1.0",
 	  "request": "^2.81.0",
     "cheerio":"^0.22.0",
-    "promise":"7.1.1"
+    "promise":"7.1.1",
+    "monk": "^5.0.2"
   },
   "engine": {
     "node": "6.9.4",
